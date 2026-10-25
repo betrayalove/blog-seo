@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, useCallback, useEffect, useSyncExternalStore, type ReactNode } from "react";
 import type { Theme } from "@/types";
 
 interface ThemeContextValue {
@@ -16,40 +9,49 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
-
 const THEME_STORAGE_KEY = "blog-seo-theme";
+const THEME_CHANGED = "blog-seo-theme-changed";
+let inMemoryTheme: Theme | undefined;
+
+function readTheme(): Theme {
+  if (inMemoryTheme) return inMemoryTheme;
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    return stored === "dark" || stored === "light" ? stored : "light";
+  } catch {
+    return "light";
+  }
+}
+
+function subscribe(onChange: () => void) {
+  window.addEventListener("storage", onChange);
+  window.addEventListener(THEME_CHANGED, onChange);
+  return () => {
+    window.removeEventListener("storage", onChange);
+    window.removeEventListener(THEME_CHANGED, onChange);
+  };
+}
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-    if (stored === "dark" || stored === "light") {
-      setThemeState(stored);
-      document.documentElement.classList.toggle("dark", stored === "dark");
-    }
-  }, []);
+  const theme = useSyncExternalStore(subscribe, readTheme, () => "light" as Theme);
 
   const toggleTheme = useCallback(() => {
-    setThemeState((prev) => {
-      const next = prev === "light" ? "dark" : "light";
+    const next = readTheme() === "light" ? "dark" : "light";
+    try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
-      document.documentElement.classList.toggle("dark", next === "dark");
-      return next;
-    });
+      inMemoryTheme = undefined;
+    } catch {
+      // Some browsers allow reading storage while blocking writes.
+      inMemoryTheme = next;
+    }
+    window.dispatchEvent(new Event(THEME_CHANGED));
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme, mounted]);
+  }, [theme]);
 
-  const value: ThemeContextValue = { theme, toggleTheme };
-  return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme(): ThemeContextValue {

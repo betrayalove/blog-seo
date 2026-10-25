@@ -21,8 +21,8 @@ describe("Страница блога", () => {
     );
     expect(screen.getByText("Первая статья")).toBeInTheDocument();
     expect(screen.getByText("Вторая статья")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /первая статья/i })).toHaveAttribute("href", "/blog/first");
-    expect(screen.getByRole("link", { name: /вторая статья/i })).toHaveAttribute("href", "/blog/second");
+    expect(screen.getByRole("link", { name: /^первая статья$/i })).toHaveAttribute("href", "/blog/first");
+    expect(screen.getByRole("link", { name: /^вторая статья$/i })).toHaveAttribute("href", "/blog/second");
   });
 
   it("пустое состояние отображает заголовок и описание", () => {

@@ -17,6 +17,10 @@ test.describe("Переключатель темы", () => {
     await expect(themeButton).toBeVisible();
     const before = await themeButton.getAttribute("data-theme");
     await themeButton.click();
-    await expect(themeButton).toHaveAttribute("data-theme", before === "light" ? "dark" : "light");
+    const after = before === "light" ? "dark" : "light";
+    await expect(themeButton).toHaveAttribute("data-theme", after);
+    await page.reload();
+    await expect(themeButton).toHaveAttribute("data-theme", after);
+    expect(await page.locator("html").evaluate((element) => element.classList.contains("dark"))).toBe(after === "dark");
   });
 });

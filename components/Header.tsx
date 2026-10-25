@@ -19,6 +19,7 @@ export function Header() {
         >
           Блог SEO
         </Link>
+        <span id="mock-auth-description" className="sr-only">Демонстрационный вход без аккаунта и сервера. После обновления страницы вход сбрасывается.</span>
         <nav className="flex flex-wrap items-center gap-2 sm:gap-4" aria-label="Основная навигация">
           <Link
             href="/blog"
@@ -57,6 +58,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => login(MOCK_LOGIN_NAME)}
+                aria-describedby="mock-auth-description"
                 className="rounded-button px-2 py-1.5 text-body text-secondary hover:bg-secondary/10 hover:text-primary dark:hover:bg-secondary/20"
               >
                 Войти

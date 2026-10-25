@@ -1,3 +1,4 @@
+import { formatArticleDate } from "@/lib/date";
 import Link from "next/link";
 import type { ArticleMeta } from "@/types";
 
@@ -5,25 +6,12 @@ interface ArticlePreviewProps {
   article: ArticleMeta;
 }
 
-function formatDate(dateStr: string): string {
-  if (!dateStr) return "";
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("ru-RU", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
 
 export function ArticlePreview({ article }: ArticlePreviewProps) {
   return (
     <article className="rounded-card bg-surface-light dark:bg-surface-dark p-4 sm:p-6 shadow-card dark:shadow-card-dark transition-shadow hover:shadow-lg dark:hover:shadow-lg">
       <time dateTime={article.date} className="text-body text-secondary block mb-1">
-        {formatDate(article.date)}
+        {formatArticleDate(article.date)}
       </time>
       <h2 className="mb-2">
         <Link
@@ -38,6 +26,7 @@ export function ArticlePreview({ article }: ArticlePreviewProps) {
       </p>
       <Link
         href={`/blog/${article.slug}`}
+        aria-label={`Читать статью «${article.title}»`}
         className="mt-2 inline-block text-body font-medium text-primary hover:underline"
       >
         Читать далее →

@@ -22,9 +22,7 @@ test.describe("Главная страница", () => {
   test("карточки статей ведут на /blog/[slug]", async ({ page }) => {
     await page.goto("/");
     const articleLinks = page.locator('a[href^="/blog/"]');
-    const count = await articleLinks.count();
-    if (count > 0) {
-      await expect(articleLinks.first()).toBeVisible();
-    }
+    await expect(page.locator("main article")).toHaveCount(5);
+    await expect(articleLinks.first()).toBeVisible();
   });
 });

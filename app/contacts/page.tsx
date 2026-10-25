@@ -1,13 +1,7 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Контакты",
-  description: "Страница контактов блога. Связь с автором проекта.",
-  openGraph: {
-    title: "Контакты | Блог SEO",
-    description: "Страница контактов блога. Связь с автором проекта.",
-  },
-};
+export const metadata: Metadata = pageMetadata("/contacts", "Контакты", "Страница контактов блога. Связь с автором проекта.");
 
 export default function ContactsPage() {
   return (

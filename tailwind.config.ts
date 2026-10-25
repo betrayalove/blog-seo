@@ -28,7 +28,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-inter)", TOKENS.fontFamily],
+        sans: ["Inter Variable", TOKENS.fontFamily],
       },
       fontSize: {
         h1: ["1.75rem", { lineHeight: "1.3" }],

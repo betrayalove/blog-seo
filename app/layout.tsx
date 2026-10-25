@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import "@fontsource-variable/inter";
+import { SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-
-const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.png`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className={inter.variable} suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body className="font-sans">
         <ThemeProvider>
           <AuthProvider>

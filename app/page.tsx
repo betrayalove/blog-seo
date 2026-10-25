@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { getAllArticles } from "@/lib/markdown";
 import { Hero } from "@/components/Hero";
 import { ArticlePreview } from "@/components/ArticlePreview";
 import { CTA } from "@/components/CTA";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Главная",
-  description:
-    "Главная страница блога о Next.js, TypeScript и SEO. Последние статьи и призыв к действию.",
-  openGraph: {
-    title: "Блог SEO — Главная",
-    description: "Главная страница блога о Next.js, TypeScript и SEO.",
-  },
-};
+export const metadata: Metadata = pageMetadata("/", "Главная", "Главная страница блога о Next.js, TypeScript и SEO. Последние статьи и призыв к действию.");
 
 const LATEST_COUNT = 5;
 

@@ -4,8 +4,7 @@ import Link from "next/link";
 import { getArticleBySlug, getAllArticles } from "@/lib/markdown";
 import { ArticleBody } from "@/components/ArticleBody";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.png`;
+import { absoluteUrl, articleJsonLd, pageMetadata, serializeJsonLd } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -18,13 +17,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const article = getArticleBySlug(slug);
   if (!article) return { title: "Статья не найдена" };
+  const metadata = pageMetadata(`/blog/${slug}`, article.title, article.description || article.excerpt || "");
   return {
-    title: article.title,
-    description: article.description || article.excerpt,
+    ...metadata,
     openGraph: {
-      title: article.title,
-      description: article.description || article.excerpt,
-      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: article.title }],
+      ...metadata.openGraph,
+      type: "article",
+      publishedTime: article.date,
+      authors: ["https://github.com/betrayalove"],
+      section: article.category,
+      url: absoluteUrl(`/blog/${slug}`),
     },
   };
 }
@@ -40,6 +42,7 @@ export default async function ArticlePage({ params }: Props) {
   return (
     <div className="py-4 sm:py-6">
       <article className="mx-auto max-w-container px-4 sm:px-6">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd(article)) }} />
         <ArticleBody article={article} />
       </article>
 

@@ -1,13 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 
-/**
- * Returns true after the component has mounted (client-side).
- * Useful to avoid hydration mismatch when reading theme/localStorage.
- */
+const subscribe = () => () => {};
+
+/** Hydration-safe client detection, without a second render from an effect. */
 export function useMounted(): boolean {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
+  return useSyncExternalStore(subscribe, () => true, () => false);
 }

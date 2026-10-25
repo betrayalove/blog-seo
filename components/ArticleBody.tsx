@@ -1,19 +1,7 @@
+import { formatArticleDate } from "@/lib/date";
 import ReactMarkdown from "react-markdown";
 import type { Article } from "@/types";
 
-function formatDate(dateStr: string): string {
-  if (!dateStr) return "";
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("ru-RU", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
 
 interface ArticleBodyProps {
   article: Article;
@@ -24,7 +12,7 @@ export function ArticleBody({ article }: ArticleBodyProps) {
     <>
       <header className="mb-4 sm:mb-6">
         <time dateTime={article.date} className="text-body text-secondary block mb-1">
-          {formatDate(article.date)}
+          {formatArticleDate(article.date)}
         </time>
         <h1>{article.title}</h1>
         {article.category && (

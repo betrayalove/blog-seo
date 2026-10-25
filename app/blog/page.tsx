@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { getAllArticles } from "@/lib/markdown";
 import { ArticlePreview } from "@/components/ArticlePreview";
 import { EmptyState } from "@/components/EmptyState";
 
-export const metadata: Metadata = {
-  title: "Блог",
-  description: "Список всех статей блога: Next.js, TypeScript, Tailwind, SEO.",
-  openGraph: {
-    title: "Блог | Блог SEO",
-    description: "Список всех статей блога: Next.js, TypeScript, Tailwind, SEO.",
-  },
-};
+export const metadata: Metadata = pageMetadata("/blog", "Блог", "Список всех статей блога: Next.js, TypeScript, Tailwind, SEO.");
 
 export default function BlogPage() {
   const articles = getAllArticles();

@@ -36,7 +36,7 @@ describe("Главная страница", () => {
       </>
     );
     expect(screen.getByText("Тестовая статья")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /тестовая статья/i })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /^тестовая статья$/i })).toHaveAttribute(
       "href",
       "/blog/test-slug"
     );

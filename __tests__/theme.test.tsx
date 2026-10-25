@@ -29,4 +29,17 @@ describe("Переключатель темы", () => {
     await userEvent.click(themeButton);
     expect(themeButton.getAttribute("data-theme")).toBe(initialTheme);
   });
+
+  it("still switches the theme when storage writes are blocked", async () => {
+    localStorage.setItem("blog-seo-theme", "light");
+    const storageWrite = jest.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new DOMException("Storage disabled", "QuotaExceededError");
+    });
+    renderWithTheme();
+    const button = screen.getByRole("button", { name: "Включить тёмную тему" });
+    await userEvent.click(button);
+    expect(button).toHaveAttribute("data-theme", "dark");
+    expect(document.documentElement).toHaveClass("dark");
+    storageWrite.mockRestore();
+  });
 });
