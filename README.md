@@ -57,10 +57,17 @@ Backend в проекте отсутствует. Приложение рабо�
 
 ## Проверки и deployment
 
-Используйте Node.js 24 (`nvm use`, версия закреплена в `.nvmrc`) и `npm ci`. Проверки: `npm run typecheck`, `npm run lint`, `npm run test:ci`, `npm run build`, затем `npx playwright install chromium` и `npm run e2e`. E2E запускает готовую production-сборку на `127.0.0.1:3300`; не запускайте dev-сервер одновременно с build в одном checkout. `BASE_URL` позволяет проверить уже работающий deployment. GitHub Actions выполняет эти проверки при push в main и в pull request и сохраняет отчёт браузерных ошибок.
+Используйте Node.js 24 (`nvm use`, версия закреплена в `.nvmrc`) и `npm ci`. Проверки: `npm run typecheck`, `npm run lint`, `npm run test:ci`, `npm run test:markdown`, `npm run build`, затем `npx playwright install chromium` и `npm run e2e`. E2E запускает готовую production-сборку на `127.0.0.1:3300`; не запускайте dev-сервер одновременно с build в одном checkout. `BASE_URL` позволяет проверить уже работающий deployment. GitHub Actions выполняет эти проверки при push в main и в pull request и сохраняет отчёт браузерных ошибок.
 
 Vercel: импортируйте этот репозиторий с framework Next.js, корень проекта `./` и Node.js 24.x. `vercel.json` задаёт чистую установку и сборку; при подключённой Git integration push в main запускает production deployment. Стандартная Git integration Vercel запускает deployment независимо от GitHub Actions; этот workflow не блокирует её автоматически. Для контроля публикации настройте защищённую main с обязательным успешным CI перед merge. Backend и отдельный сервер блогу не нужны.
 
 `NEXT_PUBLIC_SITE_URL` — origin публичного production-сайта, по умолчанию `https://blog-seo-swart.vercel.app`. При смене домена задайте его в Vercel и пересоберите проект; для preview оставляйте production origin. Каждая страница имеет canonical и Open Graph URL, статьи — article metadata и BlogPosting JSON-LD. `/sitemap.xml`, `/robots.txt` и `/og-default.png` генерируются при сборке. Inter включён в npm-пакет и раздаётся локально: build не обращается к Google Fonts. Вход демонстрационный, без сервера, аккаунтов и постоянной сессии.
 
 Для сохранения существующего дизайна используется Tailwind 3.4.19; его транзитивный `postcss-selector-parser` закреплён через override на совместимую исправленную ветку 7.1.6+. ESLint 9 выбран по peer requirements плагинов React и доступности; ESLint 10 пока выходит за их заявленные диапазоны. Обновления проверяются не только audit, но и production-сборкой и E2E.
+
+
+## Типографика и Markdown
+
+Общая палитра использует нейтральный slate для текста, синий для ссылок и CTA, фиолетовый для отдельных акцентов. Светлая и тёмная темы разделяют фон страницы, карточек, кода и границ. Стандартная шкала Tailwind сохранена: `p-4` означает 16px, а `p-6` — 24px; основной ритм — 8/16/24/32/48px, поля страницы — 16px на мобильных и 32px на desktop.
+
+Статья ограничена примерно 76 символами в строке. Списки, таблицы, inline-код и fenced code имеют отдельные стили; длинные блоки кода и таблицы прокручиваются внутри статьи. `remark-gfm` добавляет семантические таблицы, `rehype-highlight` подсвечивает указанный язык на сервере при сборке. Неизвестный язык остаётся обычным текстом. Raw HTML пропускается, стандартная фильтрация URL ReactMarkdown сохраняется. CSS меняет палитру токенов кода без клиентского highlighter и без изменения HTML при смене темы. `npm run test:markdown` проверяет реальный Markdown renderer, включая безопасный fallback и экранирование.

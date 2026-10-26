@@ -40,14 +40,14 @@ export default async function ArticlePage({ params }: Props) {
   const others = allArticles.filter((a) => a.slug !== slug).slice(0, 3);
 
   return (
-    <div className="py-4 sm:py-6">
-      <article className="mx-auto max-w-container px-4 sm:px-6">
+    <div className="py-8 sm:py-12">
+      <article className="article-shell mx-auto px-4 sm:px-8">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleJsonLd(article)) }} />
         <ArticleBody article={article} />
       </article>
 
       {others.length > 0 && (
-        <section className="mt-8 mx-auto max-w-container px-4 sm:px-6" aria-labelledby="read-more-heading">
+        <section className="mt-8 mx-auto max-w-container px-4 sm:px-8" aria-labelledby="read-more-heading">
           <h2 id="read-more-heading" className="mb-4">Читать ещё</h2>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
             {others.map((a) => (
@@ -56,7 +56,7 @@ export default async function ArticlePage({ params }: Props) {
                   href={`/blog/${a.slug}`}
                   className="block rounded-card bg-surface-light dark:bg-surface-dark p-4 shadow-card dark:shadow-card-dark hover:shadow-lg transition-shadow"
                 >
-                  <span className="text-body font-medium text-primary hover:underline">
+                  <span className="text-body font-medium text-link hover:underline">
                     {a.title}
                   </span>
                 </Link>

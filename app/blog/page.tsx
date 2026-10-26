@@ -10,8 +10,8 @@ export default function BlogPage() {
   const articles = getAllArticles();
 
   return (
-    <div className="py-4 sm:py-6">
-      <div className="mx-auto max-w-container px-4 sm:px-6">
+    <div className="py-8 sm:py-12">
+      <div className="mx-auto max-w-container px-4 sm:px-8">
         <h1 className="mb-4 sm:mb-6">Блог</h1>
         {articles.length === 0 ? (
           <EmptyState

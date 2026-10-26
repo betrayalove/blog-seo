@@ -5,7 +5,7 @@ interface EmptyStateProps {
 
 export function EmptyState({ title, description }: EmptyStateProps) {
   return (
-    <div className="rounded-card bg-surface-light dark:bg-surface-dark border border-secondary/20 p-8 text-center shadow-card dark:shadow-card-dark">
+    <div className="rounded-card bg-surface-light dark:bg-surface-dark border border-line p-8 text-center shadow-card dark:shadow-card-dark">
       <p className="text-body font-medium text-secondary mb-1" aria-hidden="true">
         📭
       </p>

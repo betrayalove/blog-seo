@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import { ArticleBody } from "@/components/ArticleBody";
 import type { Article } from "@/types";
 
+jest.mock("@/lib/markdown-options", () => ({ markdownOptions: { skipHtml: true } }));
+
 jest.mock("react-markdown", () => {
   const React = require("react");
   return {

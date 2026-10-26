@@ -11,40 +11,37 @@ const config: Config = {
     extend: {
       colors: {
         primary: TOKENS.colors.primary,
-        secondary: TOKENS.colors.secondary,
+        secondary: "var(--text-secondary)",
+        link: "var(--link)",
+        line: "var(--border)",
+        muted: "var(--surface-muted)",
+        accent: "var(--accent)",
         background: {
           light: TOKENS.colors.backgroundLight,
           dark: TOKENS.colors.backgroundDark,
         },
         surface: {
-          light: TOKENS.colors.backgroundLight,
-          dark: TOKENS.colors.backgroundDark,
+          light: TOKENS.colors.surfaceLight,
+          dark: TOKENS.colors.surfaceDark,
         },
         success: TOKENS.colors.success,
         error: TOKENS.colors.danger,
         text: {
           primary: { light: TOKENS.colors.textLight, dark: TOKENS.colors.textDark },
-          secondary: TOKENS.colors.secondary,
+          secondary: "var(--text-secondary)",
         },
       },
       fontFamily: {
         sans: ["Inter Variable", TOKENS.fontFamily],
       },
       fontSize: {
-        h1: ["1.75rem", { lineHeight: "1.3" }],
-        h2: ["1.35rem", { lineHeight: "1.4" }],
+        h1: ["clamp(1.75rem, 3vw, 2rem)", { lineHeight: "1.2", fontWeight: "700" }],
+        h2: ["clamp(1.25rem, 2.5vw, 1.5rem)", { lineHeight: "1.3", fontWeight: "600" }],
         body: ["1rem", { lineHeight: "1.6" }],
       },
-      spacing: {
-        "1": "8px",
-        "2": "16px",
-        "3": "24px",
-        "4": "32px",
-        "6": "48px",
-      },
       borderRadius: {
-        card: "8px",
-        button: "6px",
+        card: "12px",
+        button: "8px",
       },
       boxShadow: {
         card: "0 1px 3px rgba(0,0,0,0.08)",

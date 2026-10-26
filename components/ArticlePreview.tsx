@@ -9,14 +9,14 @@ interface ArticlePreviewProps {
 
 export function ArticlePreview({ article }: ArticlePreviewProps) {
   return (
-    <article className="rounded-card bg-surface-light dark:bg-surface-dark p-4 sm:p-6 shadow-card dark:shadow-card-dark transition-shadow hover:shadow-lg dark:hover:shadow-lg">
+    <article className="h-full border border-line rounded-card bg-surface-light dark:bg-surface-dark p-6 shadow-card dark:shadow-card-dark transition-shadow hover:shadow-lg dark:hover:shadow-lg">
       <time dateTime={article.date} className="text-body text-secondary block mb-1">
         {formatArticleDate(article.date)}
       </time>
       <h2 className="mb-2">
         <Link
           href={`/blog/${article.slug}`}
-          className="text-h2 text-primary hover:underline dark:text-primary"
+          className="text-h2 text-link hover:underline dark:text-link"
         >
           {article.title}
         </Link>
@@ -27,7 +27,7 @@ export function ArticlePreview({ article }: ArticlePreviewProps) {
       <Link
         href={`/blog/${article.slug}`}
         aria-label={`Читать статью «${article.title}»`}
-        className="mt-2 inline-block text-body font-medium text-primary hover:underline"
+        className="mt-2 inline-block text-body font-medium text-link hover:underline"
       >
         Читать далее →
       </Link>

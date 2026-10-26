@@ -16,14 +16,14 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <section className="py-4 sm:py-6" aria-labelledby="latest-heading">
-        <div className="mx-auto max-w-container px-4 sm:px-6">
+      <section className="py-8 sm:py-12" aria-labelledby="latest-heading">
+        <div className="mx-auto max-w-container px-4 sm:px-8">
           <h2 id="latest-heading" className="mb-4 sm:mb-6">
             Последние статьи
           </h2>
           {articles.length === 0 ? (
             <p className="text-body text-secondary">
-              Пока нет статей. Добавьте markdown-файлы в папку <code className="rounded bg-secondary/10 px-1">content/</code>.
+              Пока нет статей. Добавьте markdown-файлы в папку <code className="rounded bg-muted px-1">content/</code>.
             </p>
           ) : (
             <ul className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 list-none p-0 m-0">
@@ -38,7 +38,7 @@ export default function HomePage() {
             <p className="mt-4">
               <Link
                 href="/blog"
-                className="text-body font-medium text-primary hover:underline"
+                className="text-body font-medium text-link hover:underline"
               >
                 Все статьи →
               </Link>
